@@ -1,0 +1,1238 @@
+/*
+ * Author       : vignesh292a
+ * Generated on : 17-Jul-2023 22:00:32
+ * Version      : 1.0
+ */
+ application "Pill reminder and medication "
+ {
+ 	date format = "dd-MMM-yyyy"
+ 	time zone = "Asia/Kolkata"
+ 	time format = "24-hr"
+ 	section Registrations
+	{
+		icon = "design-window-paragraph"
+		form Registration_Form
+		{
+			displayname = "Registration Form"
+			success message = "Registration Added Successfully"
+			field alignment = labelinplace
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			must have Name
+			(
+    			type = name
+     			prefix
+     			(
+	     			 type = prefix
+	     			 displayname ="Prefix"
+	     			 visibility = false
+	     			 value = {"Mr.","Mrs.","Ms."}
+     			) 
+     			first_name
+     			(
+	     			 type = first_name
+	     			 displayname ="First Name"
+     			) 
+     			last_name
+     			(
+	     			 type = last_name
+	     			 displayname ="Last Name"
+     			) 
+     			suffix
+     			(
+	     			 type = suffix
+	     			 displayname ="Suffix"
+	     			 visibility = false
+     			) 
+	 			row = 1
+	 			column = 1   
+				width = medium
+				personal data = true
+			)
+			must have unique Email
+			(
+    			type = email
+				maxchar = 80
+	 			row = 1
+	 			column = 1   
+				width = medium
+				personal data = true
+			)
+			must have Phone_Number
+			(
+    			type = phonenumber
+				displayname = "Phone"
+	 			row = 1
+	 			column = 1   
+				width = medium
+				personal data = true
+				isencrypted = true
+			)
+			must have Gender
+			(
+				type = radiobuttons
+				maxchar = 100
+				values = {"Male","Female"}
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Users
+			(
+    			type = name
+     			prefix1
+     			(
+	     			 type = prefix
+	     			 displayname ="Prefix"
+	     			 visibility = false
+	     			 value = {"Mr.","Mrs.","Ms."}
+     			) 
+     			first_name1
+     			(
+	     			 type = first_name
+	     			 displayname ="First Name"
+     			) 
+     			last_name1
+     			(
+	     			 type = last_name
+	     			 displayname ="Last Name"
+	     			 visibility = false
+     			) 
+     			suffix1
+     			(
+	     			 type = suffix
+	     			 displayname ="Suffix"
+	     			 visibility = false
+     			) 
+	 			row = 1
+	 			column = 2   
+				width = medium
+				personal data = true
+			)
+			must have Password
+			(
+    			type = text
+				maxchar = 15
+	 			row = 1
+	 			column = 2   
+				width = medium
+				personal data = true
+				isencrypted = true
+			)
+	
+			customize
+			(
+				icon = "design-window-paragraph"
+			)
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Reset"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		default list All_Registrations
+		{
+			displayName = "All Registrations"
+			show all rows from Registration_Form    
+			(
+				Name 
+	 			(
+	      			displayformat = [first_name+""+prefix+""+last_name+""+suffix]
+	 			)
+				Email
+				Phone_Number as "Phone"
+				(
+					encryption format = show all
+					displayformat = plainnumber 
+					linktodial = enable
+				)
+				Gender
+				Password
+				Users 
+	 			(
+	      			displayformat = [first_name1+""+prefix1+""+last_name1+""+suffix1]
+	 			)
+			)
+			options
+			(
+				icon = "travel-world"
+	 		)
+			quickview
+			(
+				layout
+				(
+		 			type = -1
+					datablock1
+					(
+			 			layout type = -1
+						fields
+						(
+							Name
+							Email
+							Phone_Number as "Phone"
+							Gender
+							Password
+							Users
+						)
+					)
+				)
+
+				menu
+    			(
+    	 			header
+    	 			(
+    		 			Edit 
+    		 			Duplicate 
+    		 			Delete 
+    	 			)
+							record
+							(
+								Edit   	   
+								Duplicate   	   
+								Delete   	   
+    						)
+    			)
+    			action
+    			(
+							on click
+							(
+								View Record   	   
+    						)
+							on right click
+							(
+								Edit   	   
+								Delete   	   
+								Duplicate   	   
+								View Record   	   
+    						)
+     			)
+			)
+			detailview
+			(
+				layout
+				(
+		 			type = 1
+					datablock1
+					(
+			 			layout type = -2
+						fields
+						(
+							Name
+							Email
+							Phone_Number as "Phone"
+							Gender
+							Password
+							Users
+						)
+					)
+				)
+
+				menu
+    			(
+    	 			header
+    	 			(
+    		 			Edit 
+    		 			Duplicate 
+    		 			Delete 
+    	 			)
+    			)
+			)
+		}
+	}
+	section Login_Form
+	{
+		displayname= "Login Form"
+		icon = "design-2-form"
+		form Login_Form
+		{
+			displayname = "Login Form"
+			success message = "Data Added Successfully!"
+			field alignment = left
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			must have unique users
+			(
+    			type = picklist
+				displayname = "Users"
+				module = users
+				displayformat = [username]
+	 			row = 1
+	 			column = 1   
+				width = medium
+				personal data = true
+			)
+			must have Password
+			(
+    			type = text
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			customize
+			(
+				icon = "design-2-form"
+			)
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Reset"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		default list Login_Form_Report
+		{
+			displayName = "Login Form Report"
+			show all rows from Login_Form    
+			(
+				Password
+				users as "Users"
+			)
+			options
+			(
+				icon = "business-laptop-71"
+	 		)
+			quickview
+			(
+				layout
+				(
+		 			type = -1
+					datablock1
+					(
+			 			layout type = -1
+						fields
+						(
+							Password
+							users as "Users"
+						)
+					)
+				)
+
+				menu
+    			(
+    	 			header
+    	 			(
+    		 			Edit 
+    		 			Duplicate 
+    		 			Delete 
+    	 			)
+							record
+							(
+								Edit   	   
+								Duplicate   	   
+								Delete   	   
+    						)
+    			)
+    			action
+    			(
+							on click
+							(
+								View Record   	   
+    						)
+							on right click
+							(
+								Edit   	   
+								Delete   	   
+								Duplicate   	   
+								View Record   	   
+    						)
+     			)
+			)
+			detailview
+			(
+				layout
+				(
+		 			type = 1
+					datablock1
+					(
+			 			layout type = -2
+						fields
+						(
+							Password
+							users as "Users"
+						)
+					)
+				)
+
+				menu
+    			(
+    	 			header
+    	 			(
+    		 			Edit 
+    		 			Duplicate 
+    		 			Delete 
+    	 			)
+    			)
+			)
+		}
+	}
+	section Dashboard
+	{
+		icon = "ui-1-dashboard-half"
+				 page Dashboard 
+	 	 { 
+ 	 	 displayname = "Dashboard"
+
+ 	 	 icon = "ui-1-dashboard-half" 
+	 	 Content="<zml    \t\t\n\t\t\n\t\t\n\t\t\twebDeviceConfig='{\"layout\":{\"displayType\":\"plain\",\"design\":\"fluid\",\"style\":\"padding-right:0px;padding-top:300px;padding-bottom:0px;padding-left:0px;\"}}'\n\t\t\n\t\t\tmobileDeviceConfig='{\"layout\":{\"displayType\":\"plain\",\"design\":\"onebyone\",\"forcedOrientation\":false}}'\n\t\t\n\t\t\ttabletDeviceConfig='{\"layout\":{\"displayType\":\"plain\",\"design\":\"onebyone\",\"forcedOrientation\":false}}'\n>\n\t<layout>\n\t<row>\n\t<column\n   \t\t width=\"100%\"\n   \t>\n\t<panel elementName=\"Panel\"\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpaddingTop = '17px'\n\tpaddingLeft = '0px'\n\tpaddingRight = '17px'\n\tpaddingBottom = '17px'\n\tbgColor = '#FFFFFF'\n\n\t\twidth = '100%'\n\t\thAlign = 'center'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t<button \n\t\tmarginLeft = '0px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\n    action = 'OpenForm'\n\t\tcomponentLinkName = 'Login_Form'\n\t\ttarget = 'same-window'\n\tcolor = '#FFFFFF'\n\tsize = '20px'\n\tbold = 'true' \n\ttext ='LOGIN'\n\t\ttype = 'rounded'\n\t\tbgColor = '#0072F4'\n\t\tcornerRadius = '51px' \n\/>\n<\/pc><pc \n\t\n>\n\t<button \n\t\tmarginLeft = '0px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\n    action = 'OpenForm'\n\t\tcomponentLinkName = 'Registration_Form'\n\t\ttarget = 'same-window'\n\tcolor = '#FFFFFF'\n\tsize = '20px'\n\tbold = 'true' \n\ttext ='REGISTER'\n\t\ttype = 'rounded'\n\t\tbgColor = '#0072F4'\n\t\tcornerRadius = '51px' \n\/>\n<\/pc>\n<\/pr>\n<\/pc>\n<\/pr>\n<\/panel>\n<\/column>\n<\/row>\n<\/layout>\n<\/zml>" 
+ 	 	}
+				 page Main_Page 
+	 	 { 
+ 	 	 displayname = "Main Page"
+
+ 	 	 icon = "design-webpage" 
+	 	 Content="<zml    \t\t\n\t\t\n\t\t\n\t\t\twebDeviceConfig='{\"layout\":{\"displayType\":\"plain\",\"design\":\"fluid\",\"style\":\"padding-right:0px;padding-top:0px;padding-bottom:0px;padding-left:0px;\"}}'\n\t\t\n\t\t\tmobileDeviceConfig='{\"layout\":{\"displayType\":\"plain\",\"design\":\"actual\",\"forcedOrientation\":false}}'\n\t\t\n\t\t\ttabletDeviceConfig='{\"layout\":{\"displayType\":\"plain\",\"design\":\"actual\",\"forcedOrientation\":false}}'\n>\n\t<layout>\n\t<row>\n\t<column\n   \t\t width=\"10%\"\n   \t>\n\t<panel elementName=\"Panel 1\"\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpaddingTop = '17px'\n\tpaddingLeft = '17px'\n\tpaddingRight = '0px'\n\tpaddingBottom = '17px'\n\tbgColor = '#FFFFFF'\n\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\tpaddingLeft = '0px'\n\tbgColor = 'rgba(0, 0, 0, 0)'\n\n\t\thAlign = 'center'\n>\n\t<pr \n\t>\n\t<pc \n\t\n>\n\t<image  \n\t\tmarginRight = '0px' \n\n    action = 'OpenForm'\n\t\tcomponentLinkName = 'Profile'\n\t\ttarget = 'same-window'\n\tcolor = '#FFFFFF'\n\tbgColor = '#2A70E7'\n\twidth = '52px'\n\theight = '52px'\n\ttype = 'icon'\n\tvalue = 'emoticons-malicious'\n\tsize = '24px'\n\tcornerRadius = '26px'\n\ticonType = 'outline'\n\/>\n<\/pc>\n<\/pr><pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tcolor = '#333333'\n\tsize = '16px'\n\ttype = 'Text'\n\tbgColor = 'rgba(0, 0, 0, 0)'\n\n\n\n\t  \n\t  value = 'Profile'\n>\n<\/text>\n\n<\/pc>\n<\/pr>\n<\/pc>\n<\/pr>\n<\/pc>\n<\/pr>\n<\/panel>\n<\/column><column\n   \t\t width=\"90%\"\n   \t>\n\t<search \n\telementName=\"Search\"\n\tpaddingTop = '40px'\n\tpaddingLeft = '80px'\n\tpaddingRight = '80px'\n\tpaddingBottom = '40px'\n\tbgtype = 'none'\n\tbgColor = 'rgb(255, 255, 255)'\n\n\tshape = 'rounded'\n\tresultComponent = 'report'\n\tlinkName = 'Mdication_Report'\n\ttarget = 'new-window'\n\tcriteriaString = 'Medicine_Name.first_name is not null'\n\tfontFamily = 'default'\n\tappLinkName = 'thisapp'\n\tstyle = '4'\n\tplaceholder = 'Enter value'\n\n>\n<searchbar color=\"#000000\" bgColor=\"#ffffff\" fontSize=\"15px\"\n\/><searchbutton color=\"#ffffff\" bgColor=\"#0072F4\" \nfontSize=\"15px\"  \/><\/search>\n<\/column>\n<\/row><row>\n\t<column\n   \t\t width=\"100%\"\n   \t>\n\t<chart \n\telementName=\"Chart\"\n\n\ttype = 'Column'\n\txtitle = 'Days '\n\tytitle = 'Taken days'\n\tbgColor = 'rgb(255, 255, 255)'\n\ttheme = 'theme1'\n\tlegendPos = 'left.center'\n\tappLinkName = 'thisapp'\n\tformLinkName = 'Medication'\n\txfield = 'Alloted_date'\n\tyfields = 'count:Days_Used'\n\/>\n\n<\/column>\n<\/row><row>\n\t<column\n   \t\t width=\"100%\"\n   \t>\n\t<panel elementName=\"Panel\"\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '17px'\n\tbgColor = '#FFFFFF'\n\n\t\twidth = '100%'\n\t\thAlign = 'center'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t<button \n\t\tmarginLeft = '0px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\n    action = 'OpenReport'\n\t\tcomponentLinkName = 'Mdication_Report'\n\t\ttarget = 'same-window'\n\tcolor = '#FFFFFF'\n\tsize = '16px'\n\ttext ='Track Medication'\n\t\ttype = 'rounded'\n\t\tbgColor = '#0072F4'\n\t\tcornerRadius = '45.5938px' \n\/>\n<\/pc><pc \n\t\n>\n\t<button \n\t\tmarginLeft = '0px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\n    action = 'OpenForm'\n\t\tcomponentLinkName = 'Medication'\n\t\ttarget = 'same-window'\n\tcolor = '#FFFFFF'\n\tsize = '16px'\n\ttext ='Add Medicine'\n\t\ttype = 'rounded'\n\t\tbgColor = '#0072F4'\n\t\tcornerRadius = '45.5938px' \n\/>\n<\/pc>\n<\/pr>\n<\/pc>\n<\/pr>\n<\/panel>\n<\/column>\n<\/row>\n<\/layout>\n<\/zml>" 
+ 	 	}
+				 page feedback 
+	 	 { 
+ 	 	 displayname = "Feedback"
+
+ 	 	 icon = "users-2-a-time" 
+	 	 Content="<zml    \t\t\n\t\t\n\t\t\n\t\t\twebDeviceConfig='{\"layout\":{\"displayType\":\"plain\",\"design\":\"fluid\",\"style\":\"padding-right:0px;padding-top:0px;padding-bottom:0px;padding-left:0px;\"}}'\n\t\t\n\t\t\tmobileDeviceConfig='{\"layout\":{\"displayType\":\"plain\",\"design\":\"actual\",\"forcedOrientation\":false}}'\n\t\t\n\t\t\ttabletDeviceConfig='{\"layout\":{\"displayType\":\"plain\",\"design\":\"actual\",\"forcedOrientation\":false}}'\n>\n\t<layout>\n\t<row>\n\t<column\n   \t\t width=\"100%\"\n   \t>\n\t<form \n\telementName=\"Form\"\n\n\tappLinkName = 'thisapp'\n\tlinkName = 'Main_form'\n\theightType = 'auto'\n\turlType = 'none'\n\tzc_Header = 'false'\n\/> \n<\/column>\n<\/row>\n<\/layout>\n<\/zml>" 
+ 	 	}
+	}
+	section Main_form
+	{
+		displayname= "Main form"
+		icon = "design-2-form"
+		form Main_form
+		{
+			displayname = "Main form"
+			success message = "Data Added Successfully!"
+			field alignment = labelinplace
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			MEDICINE_NAME
+			(
+    			type = name
+				displayname = "Medicine Name"
+     			prefix
+     			(
+	     			 type = prefix
+	     			 displayname ="Prefix"
+	     			 visibility = false
+	     			 value = {"Mr.","Mrs.","Ms."}
+     			) 
+     			first_name
+     			(
+	     			 type = first_name
+	     			 displayname ="First Name"
+     			) 
+     			last_name
+     			(
+	     			 type = last_name
+	     			 displayname ="Last Name"
+     			) 
+     			suffix
+     			(
+	     			 type = suffix
+	     			 displayname ="Suffix"
+	     			 visibility = false
+     			) 
+	 			row = 1
+	 			column = 1   
+				width = medium
+				personal data = true
+			)
+			Check_Medication
+			(
+				type = checkboxes	
+				displayname = "Check Medication"
+				values = {"Taken","Not taken","Skip"}
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			customize
+			(
+				icon = "design-2-form"
+			)
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Reset"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		default list Main_form_Report
+		{
+			displayName = "Main form Report"
+			show all rows from Main_form    
+			(
+				MEDICINE_NAME  as "Medicine Name"
+	 			(
+	      			displayformat = [first_name+""+prefix+""+last_name+""+suffix]
+	 			)
+				Check_Medication as "Check Medication"
+			)
+			options
+			(
+				icon = "business-laptop-71"
+	 		)
+			quickview
+			(
+				layout
+				(
+		 			type = -1
+					datablock1
+					(
+			 			layout type = -1
+						fields
+						(
+							MEDICINE_NAME as "Medicine Name"
+							Check_Medication as "Check Medication"
+						)
+					)
+				)
+
+				menu
+    			(
+    	 			header
+    	 			(
+    		 			Edit 
+    		 			Duplicate 
+    		 			Delete 
+    	 			)
+							record
+							(
+								Edit   	   
+								Duplicate   	   
+								Delete   	   
+    						)
+    			)
+    			action
+    			(
+							on click
+							(
+								View Record   	   
+    						)
+							on right click
+							(
+								Edit   	   
+								Delete   	   
+								Duplicate   	   
+								View Record   	   
+    						)
+     			)
+			)
+			detailview
+			(
+				layout
+				(
+		 			type = 1
+					datablock1
+					(
+			 			layout type = -2
+						fields
+						(
+							MEDICINE_NAME as "Medicine Name"
+							Check_Medication as "Check Medication"
+						)
+					)
+				)
+
+				menu
+    			(
+    	 			header
+    	 			(
+    		 			Edit 
+    		 			Duplicate 
+    		 			Delete 
+    	 			)
+    			)
+			)
+		}
+	}
+	section Medication
+	{
+		icon = "tech-desktop"
+		form Medication
+		{
+			success message = "Data Added Successfully!"
+			field alignment = labelinplace
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			must have Medicine_Name
+			(
+    			type = name
+				displayname = "Medicine Name"
+     			prefix
+     			(
+	     			 type = prefix
+	     			 displayname ="Prefix"
+	     			 visibility = false
+	     			 value = {"Mr.","Mrs.","Ms."}
+     			) 
+     			first_name
+     			(
+	     			 type = first_name
+	     			 displayname ="First Name"
+     			) 
+     			last_name
+     			(
+	     			 type = last_name
+	     			 displayname ="Last Name"
+	     			 visibility = false
+     			) 
+     			suffix
+     			(
+	     			 type = suffix
+	     			 displayname ="Suffix"
+	     			 visibility = false
+     			) 
+	 			row = 1
+	 			column = 1   
+				width = medium
+				personal data = true
+			)
+			must have Quantity_in_no
+			(
+				type = number
+				displayname = "Quantity (in no.)"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Dosage_in_mg
+			(
+				type = number
+				displayname = "Dosage (in mg)"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Alerm
+			(
+    			type = time
+				displayname = "Alarm"
+				timedisplayoptions = "hh:mm:ss" 
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Reminder
+			(
+    			type = text
+				displayname = "Reminder Description"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Prescription
+			(
+    			type = image
+				source  = file
+				aspect ratio = original
+				camera = primary
+				show gallery = true
+				switch camera = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Alloted_date
+			(
+    			type = date
+				displayname = "Alloted date"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+						AI_Properties
+						(
+									fieldtype = OCR
+									modelname = "Prescription"
+									basefield = Prescription
+									taggedfield = "Alloted date"
+						)
+			)
+			Days_Used
+			(
+    			type = date
+				displayname = "Days Used"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+						AI_Properties
+						(
+									fieldtype = OCR
+									modelname = "Prescription"
+									basefield = Prescription
+									taggedfield = "Days Used"
+						)
+			)
+	
+			customize
+			(
+				icon = "ui-1-bold-add"
+			)
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Reset"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		default list Mdication_Report
+		{
+			displayName = "Mdication Report"
+			show all rows from Medication    
+			(
+				Medicine_Name  as "Medicine Name"
+	 			(
+	      			displayformat = [first_name+""+prefix+""+last_name+""+suffix]
+	 			)
+				Quantity_in_no as "Quantity (in no.)"
+				Dosage_in_mg as "Dosage (in mg)"
+				Alerm as "Alarm"
+				Reminder as "Reminder Description"
+				Prescription
+				Alloted_date as "Alloted date"
+				Days_Used as "Days Used"
+			)
+			options
+			(
+				icon = "business-laptop-71"
+	 		)
+			quickview
+			(
+				layout
+				(
+		 			type = -1
+					datablock1
+					(
+			 			layout type = -1
+						fields
+						(
+							Medicine_Name as "Medicine Name"
+							Quantity_in_no as "Quantity (in no.)"
+							Dosage_in_mg as "Dosage (in mg)"
+							Alerm as "Alarm"
+							Reminder as "Reminder Description"
+							Prescription
+							Alloted_date as "Alloted date"
+						)
+					)
+				)
+
+				menu
+    			(
+    	 			header
+    	 			(
+    		 			Edit 
+    		 			Duplicate 
+    		 			Delete 
+    	 			)
+							record
+							(
+								Edit   	   
+								Duplicate   	   
+								Delete   	   
+    						)
+    			)
+    			action
+    			(
+							on click
+							(
+								View Record   	   
+    						)
+							on right click
+							(
+								Edit   	   
+								Delete   	   
+								Duplicate   	   
+								View Record   	   
+    						)
+     			)
+			)
+			detailview
+			(
+				layout
+				(
+		 			type = 1
+					datablock1
+					(
+			 			layout type = -2
+						fields
+						(
+							Medicine_Name as "Medicine Name"
+							Quantity_in_no as "Quantity (in no.)"
+							Dosage_in_mg as "Dosage (in mg)"
+							Alerm as "Alarm"
+							Reminder as "Reminder Description"
+							Prescription
+							Alloted_date as "Alloted date"
+							Days_Used as "Days Used"
+						)
+					)
+				)
+
+				menu
+    			(
+    	 			header
+    	 			(
+    		 			Edit 
+    		 			Duplicate 
+    		 			Delete 
+    	 			)
+    			)
+			)
+		}
+	}
+	section Profiles
+	{
+		icon = "users-2-man"
+		form Profile
+		{
+			success message = "Profile Added Successfully"
+			field alignment = labelinplace
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			Name
+			(
+    			type = name
+     			prefix
+     			(
+	     			 type = prefix
+	     			 displayname ="Prefix"
+	     			 visibility = false
+	     			 value = {"Mr.","Mrs.","Ms."}
+     			) 
+     			first_name
+     			(
+	     			 type = first_name
+	     			 displayname ="First Name"
+     			) 
+     			last_name
+     			(
+	     			 type = last_name
+	     			 displayname ="Last Name"
+     			) 
+     			suffix
+     			(
+	     			 type = suffix
+	     			 displayname ="Suffix"
+	     			 visibility = false
+     			) 
+	 			row = 1
+	 			column = 1   
+				width = medium
+				personal data = true
+			)
+			Email
+			(
+    			type = email
+				maxchar = 80
+	 			row = 1
+	 			column = 1   
+				width = medium
+				personal data = true
+			)
+			Phone_Number
+			(
+    			type = phonenumber
+				displayname = "Phone"
+	 			row = 1
+	 			column = 1   
+				width = medium
+				personal data = true
+			)
+			Gender
+			(
+				type = radiobuttons
+				maxchar = 100
+				values = {"Male","Female"}
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			customize
+			(
+				icon = "users-2-man"
+			)
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Reset"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		default list All_Profiles
+		{
+			displayName = "All Profiles"
+			show all rows from Profile    
+			(
+				Name 
+	 			(
+	      			displayformat = [first_name+""+prefix+""+last_name+""+suffix]
+	 			)
+				Email
+				Phone_Number as "Phone"
+				(
+					displayformat = plainnumber 
+					linktodial = enable
+				)
+				Gender
+			)
+			options
+			(
+				icon = "travel-world"
+	 		)
+			quickview
+			(
+				layout
+				(
+		 			type = -1
+					datablock1
+					(
+			 			layout type = -1
+						fields
+						(
+							Name
+							Email
+							Phone_Number as "Phone"
+							Gender
+						)
+					)
+				)
+
+				menu
+    			(
+    	 			header
+    	 			(
+    		 			Edit 
+    		 			Duplicate 
+    		 			Delete 
+    	 			)
+							record
+							(
+								Edit   	   
+								Duplicate   	   
+								Delete   	   
+    						)
+    			)
+    			action
+    			(
+							on click
+							(
+								View Record   	   
+    						)
+							on right click
+							(
+								Edit   	   
+								Delete   	   
+								Duplicate   	   
+								View Record   	   
+    						)
+     			)
+			)
+			detailview
+			(
+				layout
+				(
+		 			type = 1
+					datablock1
+					(
+			 			layout type = -2
+						fields
+						(
+							Name
+							Email
+							Phone_Number as "Phone"
+							Gender
+						)
+					)
+				)
+
+				menu
+    			(
+    	 			header
+    	 			(
+    		 			Edit 
+    		 			Duplicate 
+    		 			Delete 
+    	 			)
+    			)
+			)
+		}
+	}
+
+
+
+
+		workflow
+		{
+		form
+		{
+			openform as "openform"
+			{
+				type =  form
+				form = Login_Form
+				record event = on add
+
+				on validate
+				{
+				}
+
+			}
+			openloginform as "openloginform"
+			{
+				type =  form
+				form = Registration_Form
+				record event = on add
+
+				on success
+				{
+				}
+
+			}
+		}
+
+
+
+
+
+	}
+	share_settings
+	{
+			"Read"
+			{
+				name = "Read"
+				type = Users_Permissions
+				permissions = {Chat:true, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "This profile will have read permission for all components\n"
+			}
+			"Write"
+			{
+				name = "Write"
+				type = Users_Permissions
+				permissions = {Chat:true, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "This profile will have write permission for all components\n"
+			}
+			"Administrator"
+			{
+				name = "Administrator"
+				type = Users_Permissions
+				permissions = {Chat:true, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "This profile will have all the permissions.\n"
+			}
+			"Customer"
+			{
+				name = "Customer"
+				type = Customer_Portal
+				permissions = {Chat:true, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "This is the default profile having only add and view permission.\n"
+			}
+			roles
+			{
+				"CEO"
+				{
+					description = "User belonging to this role can access data of all other users."
+				}
+			}
+	}
+
+	customize
+	{
+		
+		layout = "tab"
+		color = "black"
+		base theme = "professional"
+		new theme = 1
+		icons = true
+		icons style = outline
+		font = "lato"
+		color options
+    	{
+        color = "1"
+    	}
+    	logo
+    	{
+        	preference = "none"
+        	placement = "left"
+    	}
+	}
+
+
+	phone
+	{
+		customize
+		{
+        	layout = slidingpane
+		 	icons style = outline
+        	font = "default"
+            style = "3"
+        	color options
+        	{
+             	color = red
+         	}
+         	logo
+         	{
+             	preference = "none"
+         	}
+		}
+	}
+	tablet
+	{
+		customize
+		{
+        	layout = slidingpane
+		 	icons style = outline
+        	font = "default"
+            style = "3"
+        	color options
+        	{
+             	color = red
+         	}
+         	logo
+         	{
+             	preference = "none"
+         	}
+		}
+	}
+	
+}
